@@ -688,7 +688,7 @@ do
     -- clangd = {},
     -- gopls = {},
     -- pyright = {},
-    -- rust_analyzer = {},
+    rust_analyzer = {},
     --
     -- Some languages (like typescript) have entire language plugins that can be useful:
     --    https://github.com/pmizio/typescript-tools.nvim
@@ -793,7 +793,7 @@ do
     },
     -- You can also specify external formatters in here.
     formatters_by_ft = {
-      -- rust = { 'rustfmt' },
+      rust = { 'rustfmt' }, -- Not in Mason; installed with `rustup component add rustfmt`
       -- Conform can also run multiple formatters sequentially
       -- python = { "isort", "black" },
       --
