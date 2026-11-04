@@ -423,18 +423,11 @@ do
   -- change the command under that to load whatever the name of that colorscheme is.
   --
   -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-  vim.pack.add { gh 'folke/tokyonight.nvim' }
-  ---@diagnostic disable-next-line: missing-fields
-  require('tokyonight').setup {
-    styles = {
-      comments = { italic = false }, -- Disable italics in comments
-    },
+  vim.pack.add { gh 'ellisonleao/gruvbox.nvim' }
+  require('gruvbox').setup {
+    contrast = 'soft', -- 'soft', 'medium', or 'hard'
   }
-
-  -- Load the colorscheme here.
-  -- Like many other themes, this one has different styles, and you could load
-  -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-  vim.cmd.colorscheme 'tokyonight-night'
+  vim.cmd.colorscheme 'gruvbox'
 
   -- Highlight todo, notes, etc in comments
   vim.pack.add { gh 'folke/todo-comments.nvim' }
@@ -736,6 +729,7 @@ do
     -- clangd = {},
     -- gopls = {},
     -- pyright = {},
+    rust_analyzer = {},
     -- tsc = {},
     --
     -- Some languages (like rust) have entire language plugins that can be useful:
@@ -804,6 +798,7 @@ do
   local ensure_installed = vim.tbl_keys(servers or {})
   vim.list_extend(ensure_installed, {
     -- You can add other tools here that you want Mason to install
+    'typescript-language-server', -- Provides the fallback tsserver used by typescript-tools.nvim
   })
 
   require('mason-tool-installer').setup { ensure_installed = ensure_installed }
@@ -840,7 +835,7 @@ do
     },
     -- You can also specify external formatters in here.
     formatters_by_ft = {
-      -- rust = { 'rustfmt' },
+      rust = { 'rustfmt' }, -- Not in Mason; installed with `rustup component add rustfmt`
       -- Conform can also run multiple formatters sequentially
       -- python = { "isort", "black" },
       --
@@ -1017,11 +1012,14 @@ do
   -- require 'kickstart.plugins.debug'
   -- require 'kickstart.plugins.indent_line'
   -- require 'kickstart.plugins.lint'
-  -- require 'kickstart.plugins.autopairs'
-  -- require 'kickstart.plugins.neo-tree'
+  require 'kickstart.plugins.autopairs'
+  require 'kickstart.plugins.neo-tree'
+  require 'kickstart.plugins.gitsigns' -- adds gitsigns recommended keymaps
 
   -- NOTE: You can add your own plugins, configuration, etc. in `lua/custom/plugins/*.lua`.
   --
+  --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
+  require 'custom.plugins'
   -- For independent modules, uncomment the convenience loader:
   -- require 'custom.plugins'
   --
