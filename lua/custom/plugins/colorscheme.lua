@@ -1,28 +1,13 @@
--- Default options:
-require("gruvbox").setup({
-  terminal_colors = true, -- add neovim terminal colors
-  undercurl = true,
-  underline = true,
-  bold = true,
-  italic = {
-    strings = true,
-    emphasis = true,
-    comments = true,
-    operators = false,
-    folds = true,
-  },
-  strikethrough = true,
-  invert_selection = false,
-  invert_signs = false,
-  invert_tabline = false,
-  inverse = true, -- invert background for search, diffs, statuslines and errors
-  contrast = "", -- can be "hard", "soft" or empty string
-  palette_overrides = {},
-  overrides = {},
-  dim_inactive = false,
-  transparent_mode = false,
-})
+vim.pack.add {
+  'https://github.com/ellisonleao/gruvbox.nvim',
+  'https://github.com/folke/tokyonight.nvim',
+}
 
-vim.cmd("colorscheme gruvbox")
-vim.cmd.colorscheme 'gruvbox'
+require('gruvbox').setup { contrast = 'hard' }
+require('tokyonight').setup {
+  style = 'moon',
+  on_colors = function() end,
+  on_highlights = function() end,
+}
 
+vim.cmd.colorscheme 'tokyonight-night'

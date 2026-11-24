@@ -418,16 +418,7 @@ do
   }
 
   -- [[ Colorscheme ]]
-  -- You can easily change to a different colorscheme.
-  -- Change the name of the colorscheme plugin below, and then
-  -- change the command under that to load whatever the name of that colorscheme is.
-  --
-  -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-  vim.pack.add { gh 'ellisonleao/gruvbox.nvim' }
-  require('gruvbox').setup {
-    contrast = 'soft', -- 'soft', 'medium', or 'hard'
-  }
-  vim.cmd.colorscheme 'gruvbox'
+  require 'custom.plugins.colorscheme'
 
   -- Highlight todo, notes, etc in comments
   vim.pack.add { gh 'folke/todo-comments.nvim' }
@@ -533,7 +524,11 @@ do
     --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
     --   },
     -- },
-    -- pickers = {}
+    pickers = {
+      live_grep = {
+        additional_args = function() return { '--glob', '!*.spec.ts' } end,
+      },
+    },
     extensions = {
       ['ui-select'] = { require('telescope.themes').get_dropdown() },
     },
@@ -555,6 +550,7 @@ do
   vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
   vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
   vim.keymap.set('n', '<leader>sc', builtin.commands, { desc = '[S]earch [C]ommands' })
+  vim.keymap.set('n', '<leader>st', function() builtin.colorscheme { enable_preview = true } end, { desc = '[S]earch [T]hemes' })
   vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
 
   -- Add Telescope-based LSP pickers when an LSP attaches to a buffer.
@@ -798,6 +794,7 @@ do
   local ensure_installed = vim.tbl_keys(servers or {})
   vim.list_extend(ensure_installed, {
     -- You can add other tools here that you want Mason to install
+    'biome',
     'typescript-language-server', -- Provides the fallback tsserver used by typescript-tools.nvim
   })
 
@@ -835,12 +832,17 @@ do
     },
     -- You can also specify external formatters in here.
     formatters_by_ft = {
+      javascript = { 'biome' },
+      javascriptreact = { 'biome' },
+      typescript = { 'biome' },
+      typescriptreact = { 'biome' },
+      json = { 'biome' },
+      jsonc = { 'biome' },
+      css = { 'biome' },
+      graphql = { 'biome' },
       rust = { 'rustfmt' }, -- Not in Mason; installed with `rustup component add rustfmt`
       -- Conform can also run multiple formatters sequentially
       -- python = { "isort", "black" },
-      --
-      -- You can use 'stop_after_first' to run the first available formatter from the list
-      -- javascript = { "prettierd", "prettier", stop_after_first = true },
     },
   }
 
